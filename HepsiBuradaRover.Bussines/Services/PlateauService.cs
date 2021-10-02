@@ -13,32 +13,18 @@ namespace HepsiBuradaRover.Bussines.Services
     {
         public Plateau GeneratePlateau(string plateauSizeInput)
         {
-            Plateau model = null;
+            var plateauSizeItems = plateauSizeInput.Split(' ');
 
-            if (!string.IsNullOrWhiteSpace(plateauSizeInput))
+            int width = int.Parse(plateauSizeItems[0]);
+            int height = int.Parse(plateauSizeItems[1]);
+
+            var plateau = new Plateau()
             {
-                var plateauSizeItems = plateauSizeInput.Split(' ');
+                Height = height,
+                Width = width,
+            };
 
-                if (plateauSizeItems.Length == HepsiBuradaConstants.MaxPlateauInputItemCount)
-                {
-                    int width;
-                    if (int.TryParse(plateauSizeItems[0], out width))
-                    {
-                        int height;
-                        if (int.TryParse(plateauSizeItems[1], out height))
-                        {
-                            model = new Plateau()
-                            {
-                                Height = height,
-                                Width = width,
-                            };
-                        }
-                    }
-
-                }
-            }
-
-            return model;
+            return plateau;
         }
 
         public bool ValidatePlateauInput(string plateauSizeInput)

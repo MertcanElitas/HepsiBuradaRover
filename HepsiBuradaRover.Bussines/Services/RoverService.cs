@@ -55,7 +55,7 @@ namespace HepsiBuradaRover.Bussines.Services
                 rovers.Add(rover);
             }
 
-            ExevuteMoveCommand(rovers);
+            ExecuteMoveCommand(rovers);
 
             var result = rovers.OrderBy(x => x.Order)
                        .Select(x => x.ToString())
@@ -123,7 +123,7 @@ namespace HepsiBuradaRover.Bussines.Services
             return false;
         }
 
-        private void ExevuteMoveCommand(List<Rover> rovers)
+        private void ExecuteMoveCommand(List<Rover> rovers)
         {
             foreach (var rover in rovers)
             {
