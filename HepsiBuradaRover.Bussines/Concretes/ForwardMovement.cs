@@ -15,6 +15,24 @@ namespace HepsiBuradaRover.Bussines.Concretes
         public void Execute(Rover rover)
         {
             RoverMoveHelper.Move(rover);
+            CheckRoverOutOfBound(rover);
+        }
+
+        public void CheckRoverOutOfBound(Rover rover)
+        {
+            var roverXCoordinate = rover.XCoordinate;
+            var roverYCoordinate = rover.YCoordinate;
+
+            var plateauWidth = rover.Plateau.Width;
+            var plateauHeight = rover.Plateau.Height;
+
+
+            if ((roverXCoordinate > plateauWidth || roverXCoordinate < 0) ||
+                (roverYCoordinate > plateauHeight || roverYCoordinate < 0))
+            {
+                rover.OutOfBounds = true;
+                rover.ErrorMessage = "I am sorry out of the plateau";
+            }
         }
 
         public void Dispose()

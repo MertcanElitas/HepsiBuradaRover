@@ -11,11 +11,6 @@ namespace HepsiBuradaRover.App
     {
         static void Main(string[] args)
         {
-            //var aa = Enum.GetValues(typeof(Test)).Cast<Test>()
-            //                .ToList();
-
-
-
             #region " Dependency Injection "
 
             var provider = DependencyResolver.Resolve();
@@ -132,13 +127,5 @@ namespace HepsiBuradaRover.App
         }
 
         #endregion
-    }
-
-    public enum Test
-    {
-        mertcan = 1,
-        gamze = 2,
-        Mine = 3,
-        Ahmet = 4
     }
 }

@@ -129,6 +129,9 @@ namespace HepsiBuradaRover.Bussines.Services
             {
                 foreach (var command in rover.MoveCommands)
                 {
+                    if (rover.OutOfBounds)
+                        break;
+
                     switch (command)
                     {
                         case MoveIInputType.Left:
