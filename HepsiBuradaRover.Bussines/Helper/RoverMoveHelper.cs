@@ -18,7 +18,7 @@ namespace HepsiBuradaRover.Bussines.Helper
                     rover.YCoordinate = rover.YCoordinate + 1;
                     break;
                 case RoverDirectionType.South:
-                    rover.YCoordinate = rover.YCoordinate + 1;
+                    rover.YCoordinate = rover.YCoordinate - 1;
                     break;
                 case RoverDirectionType.West:
                     rover.XCoordinate = rover.XCoordinate - 1;

@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace HepsiBuradaRover.Bussines.Concretes
 {
-    public class ForwardMovement : IMoveable
+    public class ForwardMovement : IMoveable, IDisposable
     {
+
         public void Execute(Rover rover)
         {
             RoverMoveHelper.Move(rover);
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

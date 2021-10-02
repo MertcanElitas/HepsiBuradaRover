@@ -1,4 +1,5 @@
-﻿using HepsiBuradaRover.Common.DataTransferObejcts;
+﻿using HepsiBuradaRover.Common.Attributes;
+using HepsiBuradaRover.Common.DataTransferObejcts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +11,30 @@ namespace HepsiBuradaRover.Common.Extensions
 {
     public static class EnumDisplayNameHelper
     {
-        public static IList<EnumInformationDto> GetValues<T>() where T :Enum
+        public static IList<EnumInformationDto> GetValues<T>() where T : Enum
         {
             var enumInformatios = new List<EnumInformationDto>();
 
-            var enumFields = typeof(T).GetType().GetFields(BindingFlags.Static | BindingFlags.Public);
-            foreach (FieldInfo fieldInfo in enumFields)
+            var enumValues = Enum.GetValues(typeof(T)).Cast<T>()
+                           .ToList();
+
+            foreach (var enumValue in enumValues)
             {
-                var name = fieldInfo.Name;
+                var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
+
+                var descriptionAttributes = fieldInfo.GetCustomAttributes(
+                    typeof(CustomDisplayAttribute), false) as CustomDisplayAttribute[];
+
+                string description = string.Empty;
+
+                if (descriptionAttributes != null && descriptionAttributes.Any())
+                    description = descriptionAttributes[0].Name;
 
                 enumInformatios.Add(new EnumInformationDto()
                 {
-                    Name = name
+                    IntValue = enumValue.GetHashCode(),
+                    Name = enumValue.ToString(),
+                    Description = description
                 });
             }
             return enumInformatios;

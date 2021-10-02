@@ -1,4 +1,5 @@
-﻿using HepsiBuradaRover.Domain.Domains;
+﻿using HepsiBuradaRover.Common.DataTransferObejcts;
+using HepsiBuradaRover.Domain.Domains;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace HepsiBuradaRover.Bussines.Interfaces
 {
     public interface IRoverService
     {
-        Rover GenerateRover(string positionInput, string moveInput, Plateau plateau);
+        List<string> GenerateRover(List<RoverDto> roverList, string plateauInput);
+
+        bool ValidateRoverPositionInput(string positionInput);
+
+        bool ValidateRoverMoveInput(string moveInput);
     }
 }

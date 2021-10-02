@@ -40,5 +40,29 @@ namespace HepsiBuradaRover.Bussines.Services
 
             return model;
         }
+
+        public bool ValidatePlateauInput(string plateauSizeInput)
+        {
+            if (!string.IsNullOrWhiteSpace(plateauSizeInput))
+            {
+                var plateauSizeItems = plateauSizeInput.Split(' ');
+
+                if (plateauSizeItems.Length == HepsiBuradaConstants.MaxPlateauInputItemCount)
+                {
+                    int width;
+                    int height;
+
+                    var widthParseResult = int.TryParse(plateauSizeItems[0], out width);
+                    var heightParseReuslt = int.TryParse(plateauSizeItems[1], out height);
+
+                    if (widthParseResult && heightParseReuslt)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

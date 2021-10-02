@@ -1,17 +1,20 @@
 ﻿using HepsiBuradaRover.Bussines.Interfaces;
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using HepsiBuradaRover.Domain.Domains;
 using System.Collections.Generic;
+using HepsiBuradaRover.Common.DataTransferObejcts;
+using System.Linq;
 
 namespace HepsiBuradaRover.App
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //var aa = Enum.GetValues(typeof(Test)).Cast<Test>()
+            //                .ToList();
+
+
 
             #region " Dependency Injection "
 
@@ -22,49 +25,104 @@ namespace HepsiBuradaRover.App
 
             #endregion
 
+            var plateauInput = InitializePlateau(plateauService);
+            var roverInputs = InitializeRover(roverService);
 
-            var plateau = InitializePlateau(plateauService);
-            var rovers = InitializeRover(roverService, plateau);
-        }
+            var roverMoveResults = roverService.GenerateRover(roverInputs, plateauInput);
 
-        private static Plateau InitializePlateau(IPlateauService plateauService)
-        {
-            Plateau model = null;
-
-            while (model == null)
+            foreach (var item in roverMoveResults)
             {
-                Console.WriteLine("Plateau grid size :");
-                var plateauInput = Console.ReadLine();
-
-                model = plateauService.GeneratePlateau(plateauInput);
+                Console.WriteLine(item);
             }
 
-            return model;
+            Console.ReadKey();
         }
-        private static List<Rover> InitializeRover(IRoverService roverService, Plateau plateau)
+
+        #region " UI Operations "
+
+        private static string InitializePlateau(IPlateauService plateauService)
+        {
+            string plateauInput = null;
+            bool isInsertPlateauInput = true;
+
+            while (isInsertPlateauInput)
+            {
+                Console.WriteLine("Plateau grid size :");
+                plateauInput = Console.ReadLine();
+
+                var isValidPlateauInputResult = plateauService.ValidatePlateauInput(plateauInput);
+
+                isInsertPlateauInput = !isValidPlateauInputResult;
+
+                if (!isValidPlateauInputResult)
+                {
+                    Console.WriteLine($"You have entered wrong data, please check : {plateauInput}");
+                    continue;
+                }
+            }
+
+            return plateauInput;
+        }
+
+        private static List<RoverDto> InitializeRover(IRoverService roverService)
         {
             var isContinueInsertRover = true;
-            List<Rover> rovers = new List<Rover>();
+            int order = 1;
+            List<RoverDto> rovers = new List<RoverDto>();
 
             while (isContinueInsertRover)
             {
-                Console.WriteLine("Please Enter Rover position :");
-                var roverPositionInput = Console.ReadLine();
+                string roverPositionInput = string.Empty;
+                string roverMoveInput = string.Empty;
 
-                Console.WriteLine("Please Enter Rover command :");
-                var roverMoveInput = Console.ReadLine();
+                bool isContinueInsertRoverPosition = true;
+                bool isContinueInsertRoverMoveInput = true;
 
-                var rover = roverService.GenerateRover(roverPositionInput, roverMoveInput, plateau);
+                while (isContinueInsertRoverPosition)
+                {
+                    Console.WriteLine("Please Enter Rover Position :");
+                    roverPositionInput = Console.ReadLine();
 
-                if (rover == null)
-                    Console.WriteLine("There is a problem :");
-                else
-                    rovers.Add(rover);
+                    var isValidRoverPosition = roverService.ValidateRoverPositionInput(roverPositionInput);
+
+                    isContinueInsertRoverPosition = !isValidRoverPosition;
+
+                    if (!isValidRoverPosition)
+                    {
+                        Console.WriteLine($"You have entered wrong data, please check : {roverPositionInput}");
+                        continue;
+                    }
+                }
+
+                while (isContinueInsertRoverMoveInput)
+                {
+                    Console.WriteLine("Please Enter Rover Move Input :");
+                    roverMoveInput = Console.ReadLine();
+
+                    var isValidRoverMoveInput = roverService.ValidateRoverMoveInput(roverMoveInput);
+
+                    isContinueInsertRoverMoveInput = !isValidRoverMoveInput;
+
+                    if (!isValidRoverMoveInput)
+                    {
+                        Console.WriteLine($"You have entered wrong data, please check : {roverMoveInput}");
+                        continue;
+                    }
+                }
+
+                var dto = new RoverDto()
+                {
+                    MoveInput = roverMoveInput,
+                    PositionInput = roverPositionInput,
+                    Order = order++
+                };
+
+                rovers.Add(dto);
 
                 Console.WriteLine("Do you want to insert rover ? (Y)");
-                var addAnotherRoverInput = Console.ReadLine();
+                var isInsertRoverInput = Console.ReadLine();
 
-                if (addAnotherRoverInput.ToUpper() != "Y")
+                if (isInsertRoverInput.ToUpper() != "Y")
                 {
                     isContinueInsertRover = false;
                 }
@@ -72,5 +130,15 @@ namespace HepsiBuradaRover.App
 
             return rovers;
         }
+
+        #endregion
+    }
+
+    public enum Test
+    {
+        mertcan = 1,
+        gamze = 2,
+        Mine = 3,
+        Ahmet = 4
     }
 }

@@ -10,5 +10,7 @@ namespace HepsiBuradaRover.Bussines.Interfaces
     public interface IPlateauService
     {
         Plateau GeneratePlateau(string plateauInput);
+
+        bool ValidatePlateauInput(string plateauSizeInput);
     }
 }

@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace HepsiBuradaRover.Bussines.Concretes
 {
-    public class TurnRightMovement : IMoveable
+    public class TurnRightMovement : IMoveable,IDisposable
     {
+      
         public void Execute(Rover rover)
         {
             RoverMoveHelper.TurnRight(rover);
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HepsiBuradaRover.Common.DataTransferObejcts
 {
-    public class EnumInformationDto
+    public class RoverDto
     {
-        public int IntValue { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string PositionInput { get; set; }
+        public string MoveInput { get; set; }
+        public int Order { get; set; }
     }
 }
