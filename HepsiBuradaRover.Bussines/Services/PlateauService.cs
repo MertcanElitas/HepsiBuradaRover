@@ -27,7 +27,7 @@ namespace HepsiBuradaRover.Bussines.Services
             return plateau;
         }
 
-        public bool ValidatePlateauInput(string plateauSizeInput)
+        public bool ValidatePlateauBoundaryInput(string plateauSizeInput)
         {
             if (!string.IsNullOrWhiteSpace(plateauSizeInput))
             {
@@ -42,9 +42,7 @@ namespace HepsiBuradaRover.Bussines.Services
                     var heightParseReuslt = int.TryParse(plateauSizeItems[1], out height);
 
                     if (widthParseResult && heightParseReuslt)
-                    {
                         return true;
-                    }
                 }
             }
 

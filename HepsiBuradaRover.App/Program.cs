@@ -20,10 +20,10 @@ namespace HepsiBuradaRover.App
 
             #endregion
 
-            var plateauInput = InitializePlateau(plateauService);
-            var roverInputs = InitializeRover(roverService);
+            var plateauBoundaryInput = GetPlateauBoundaryInput(plateauService);
+            var rovers = InitializeRoverList(roverService);
 
-            var roverMoveResults = roverService.GenerateRover(roverInputs, plateauInput);
+            var roverMoveResults = roverService.ExecuteRoverCommands(rovers, plateauBoundaryInput);
 
             foreach (var item in roverMoveResults)
             {
@@ -35,31 +35,31 @@ namespace HepsiBuradaRover.App
 
         #region " UI Operations "
 
-        private static string InitializePlateau(IPlateauService plateauService)
+        private static string GetPlateauBoundaryInput(IPlateauService plateauService)
         {
-            string plateauInput = null;
+            string plateauBoundaryInput = null;
             bool isInsertPlateauInput = true;
 
             while (isInsertPlateauInput)
             {
                 Console.WriteLine("Plateau grid size :");
-                plateauInput = Console.ReadLine();
+                plateauBoundaryInput = Console.ReadLine();
 
-                var isValidPlateauInputResult = plateauService.ValidatePlateauInput(plateauInput);
+                var isValidPlateauInputResult = plateauService.ValidatePlateauBoundaryInput(plateauBoundaryInput);
 
                 isInsertPlateauInput = !isValidPlateauInputResult;
 
                 if (!isValidPlateauInputResult)
                 {
-                    Console.WriteLine($"You have entered wrong data, please check : {plateauInput}");
+                    Console.WriteLine($"You have entered wrong data, please check : {plateauBoundaryInput}");
                     continue;
                 }
             }
 
-            return plateauInput;
+            return plateauBoundaryInput;
         }
 
-        private static List<RoverDto> InitializeRover(IRoverService roverService)
+        private static List<RoverDto> InitializeRoverList(IRoverService roverService)
         {
             var isContinueInsertRover = true;
             int order = 1;
@@ -114,7 +114,7 @@ namespace HepsiBuradaRover.App
 
                 rovers.Add(dto);
 
-                Console.WriteLine("Do you want to insert rover ? (Y)");
+                Console.WriteLine("Do you want to insert rover? (Y or N)");
                 var isInsertRoverInput = Console.ReadLine();
 
                 if (isInsertRoverInput.ToUpper() != "Y")

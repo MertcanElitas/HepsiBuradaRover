@@ -9,8 +9,18 @@ namespace HepsiBuradaRover.Bussines.Interfaces
 {
     public interface IPlateauService
     {
+        /// <summary>
+        /// This method create a new plateau instance.
+        /// </summary>
+        /// <param name="plateauInput"></param>
+        /// <returns></returns>
         Plateau GeneratePlateau(string plateauInput);
 
-        bool ValidatePlateauInput(string plateauSizeInput);
+        /// <summary>
+        /// This method checks the accuracy of the plateau boundary entered by the user.       
+        /// </summary>
+        /// <param name="plateauSizeInput"></param>
+        /// <returns></returns>
+        bool ValidatePlateauBoundaryInput(string plateauSizeInput);
     }
 }

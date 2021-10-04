@@ -10,10 +10,26 @@ namespace HepsiBuradaRover.Bussines.Interfaces
 {
     public interface IRoverService
     {
-        List<string> GenerateRover(List<RoverDto> roverList, string plateauInput);
+        /// <summary>
+        /// This method calculates its new location with the commands declared to the rover.
+        /// </summary>
+        /// <param name="roverList"></param>
+        /// <param name="plateauBoundaryInput"></param>
+        /// <returns></returns>
+        List<string> ExecuteRoverCommands(List<RoverDto> roverList, string plateauBoundaryInput);
 
+        /// <summary>
+        /// This method checks the accuracy of the coordinate data entered by the user.
+        /// </summary>
+        /// <param name="positionInput"></param>
+        /// <returns></returns>
         bool ValidateRoverPositionInput(string positionInput);
 
+        /// <summary>
+        /// This method checks the accuracy of the motion commands entered by the user.
+        /// </summary>
+        /// <param name="moveInput"></param>
+        /// <returns></returns>
         bool ValidateRoverMoveInput(string moveInput);
     }
 }

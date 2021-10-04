@@ -23,7 +23,7 @@ namespace HepsiBuradaRover.Bussines.Services
             _plateauService = plateauService;
         }
 
-        public List<string> GenerateRover(List<RoverDto> roverList, string plateauInput)
+        public List<string> ExecuteRoverCommands(List<RoverDto> roverList, string plateauBoundaryInput)
         {
             List<Rover> rovers = new List<Rover>();
 
@@ -39,7 +39,7 @@ namespace HepsiBuradaRover.Bussines.Services
                                     .FirstOrDefault(x => x.Description == directionValue)
                                     .IntValue;
 
-                var plateau = _plateauService.GeneratePlateau(plateauInput);
+                var plateau = _plateauService.GeneratePlateau(plateauBoundaryInput);
                 var moveCommands = GetRoverCommandList(roverDto.MoveInput);
 
                 var rover = new Rover()
@@ -129,7 +129,7 @@ namespace HepsiBuradaRover.Bussines.Services
             {
                 foreach (var command in rover.MoveCommands)
                 {
-                    if (rover.OutOfBounds)
+                    if (rover.OutOfBoundary)
                         break;
 
                     switch (command)
@@ -157,7 +157,8 @@ namespace HepsiBuradaRover.Bussines.Services
         {
             var moveInputTypes = EnumDisplayNameHelper.GetValues<MoveIInputType>()
                                      .Where(x => x.IntValue != MoveIInputType.Null.GetHashCode())
-                                     .ToList(); ;
+                                     .ToList();
+
             var moveInputArray = moveInput.ToCharArray();
 
             var result = new List<MoveIInputType>();

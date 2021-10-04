@@ -30,7 +30,7 @@ namespace HepsiBuradaRover.Bussines.Concretes
             if ((roverXCoordinate > plateauWidth || roverXCoordinate < 0) ||
                 (roverYCoordinate > plateauHeight || roverYCoordinate < 0))
             {
-                rover.OutOfBounds = true;
+                rover.OutOfBoundary = true;
                 rover.ErrorMessage = "I am sorry out of the plateau";
             }
         }

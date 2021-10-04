@@ -20,24 +20,29 @@ namespace HepsiBuradaRover.Common.Extensions
 
             foreach (var enumValue in enumValues)
             {
-                var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
-
-                var descriptionAttributes = fieldInfo.GetCustomAttributes(
-                    typeof(CustomDisplayAttribute), false) as CustomDisplayAttribute[];
-
-                string description = string.Empty;
-
-                if (descriptionAttributes != null && descriptionAttributes.Any())
-                    description = descriptionAttributes[0].Name;
-
                 enumInformatios.Add(new EnumInformationDto()
                 {
                     IntValue = enumValue.GetHashCode(),
                     Name = enumValue.ToString(),
-                    Description = description
+                    Description = enumValue.GetEnumDescriptionValue()
                 });
             }
             return enumInformatios;
+        }
+
+        public static string GetEnumDescriptionValue(this Enum value)
+        {
+            var fieldInfo = value.GetType().GetField(value.ToString());
+
+            var descriptionAttributes = fieldInfo.GetCustomAttributes(
+                typeof(CustomDisplayAttribute), false) as CustomDisplayAttribute[];
+
+            string description = string.Empty;
+
+            if (descriptionAttributes != null && descriptionAttributes.Any())
+                description = descriptionAttributes[0].Name;
+
+            return description;
         }
     }
 }
