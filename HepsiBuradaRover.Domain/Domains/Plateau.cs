@@ -10,7 +10,5 @@ namespace HepsiBuradaRover.Domain.Domains
     {
         public int Width { get; set; }
         public int Height { get; set; }
-
-        public List<Rover> Rovers { get; set; }
     }
 }

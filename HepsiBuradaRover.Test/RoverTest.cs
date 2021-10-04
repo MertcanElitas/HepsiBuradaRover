@@ -85,9 +85,6 @@ namespace HepsiBuradaRover.Test
             var thirdInput = "4 2 F";
             var fourthInput = "4 5 S";
 
-            var plateauService = new PlateauService();
-            var roverService = new RoverService(plateauService);
-
             #endregion
             #region " Act "
 
